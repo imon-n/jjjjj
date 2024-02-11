@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+    .amount-box{
+        width: 200px;
+        height: 179px;
+        color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid gray;
+        /* font-size: 40px; */
+        font-weight: bold;
+        border-radius: 7px;
+        box-shadow: 2px 2px 8px gray;
+    }
+
+    .amount-containner{
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .deposite{
+        background-color: aqua;
+    }
+
+    .withdraw{
+        background-color: rgba(238, 130, 238, 0.559);
+    }
+
+    .total{
+        background-color: orange;
+    }
+
+    .deposite-withdraw-containner{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+        gap: 50px;
+        text-align: center;
+    }
+
+    .btn{
+        padding: 6px 15px;
+        margin-top: 8px;
+    }
+
+    .input-box{
+        padding: 50px;
+        border: 2px solid gray;
+    }
+
+    .deposite-box button{
+        background-color: blue;
+        border: none;
+        border-radius: 4px;
+    }
+
+    .withdraw-box button{
+        background-color: red;
+        border: none;
+        border-radius: 4px;
+    }
+
+    .amount{
+        font-size: 40px;
+    }
+    </style>
+</head>
+<body>
+    <div class="amount-containner">
+        <div class="deposite amount-box">
+            <div>
+                <h1 id="deposite-amount" class="amount">00</h1>
+                <p>Deposite</p>
+            </div>
+        </div>
+        <div class="withdraw amount-box">
+            <div>
+                <h1 id="with-amount" class="amount">00</h1>
+                <p>Withdraw</p>
+            </div>
+        </div>
+        <div class="total amount-box">
+            <div>
+                <h1 id="total-amount" class="amount">00</h1>
+                <p>Total</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="deposite-withdraw-containner">
+        <div class="deposite-box input-box">
+            <input type="number" id="deposite-input">
+            <br>
+            <button onclick="handleDeposite()" class="btn">Deposite</button>
+        </div>
+
+        <div class="withdraw-box input-box">
+            <input type="number" id="withdraw-input">
+            <br>
+            <button onclick="handleWithdraw()" class="btn">Withdraw</button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script>
+        function handleDeposite(){
+            var inputAmount = document.getElementById("deposite-input").value;
+            var convertInputAmount = convertTonumber(inputAmount);
+
+            var depositeAmount = document.getElementById("deposite-amount").innerText;
+            var convertDepositeAmount = convertTonumber(depositeAmount);
+
+            var sum =  convertDepositeAmount + convertInputAmount;
+            
+            document.getElementById("deposite-amount").innerText = sum;
+
+            var totalAmount = document.getElementById("total-amount").innerText;
+            var convertTotalAmount = convertTonumber(totalAmount);
+
+            var balanceAmount = convertTotalAmount + convertInputAmount;
+
+            document.getElementById("total-amount").innerText = balanceAmount;
+
+            document.getElementById("deposite-input").value = "";
+
+        }
+
+
+        function handleWithdraw(){
+            var inputAmount = document.getElementById("withdraw-input").value;
+            var convertInputAmount = convertTonumber(inputAmount);
+
+            var withdrawAmount= document.getElementById("with-amount").innerText;
+            var convertwithdrawAmount = convertTonumber(withdrawAmount);
+
+            document.getElementById("with-amount").innerText = convertInputAmount + convertwithdrawAmount;
+
+
+            var totalAmount = document.getElementById("total-amount").innerText;
+            
+            var convertTotalAmount = convertTonumber(totalAmount);
+
+            if (convertTotalAmount >= convertInputAmount){
+                var balanceAmount = convertTotalAmount - convertInputAmount;
+                document.getElementById("total-amount").innerText = balanceAmount;
+            }
+            else{
+                document.getElementById("total-amount").innerText = "Incufficient balanace"
+            }
+
+            document.getElementById("withdraw-input").value = "";
+        }
+
+        function convertTonumber(val){
+            return parseInt(val);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>prac</title>
+    <style>
+        .search-input{
+            padding: 14px 30px;
+            margin-right: 10px;
+        }
+
+        .search{
+            text-align: center;
+            margin-top:20px;
+        }
+
+        #search-btn{
+            padding: 10px 20px;
+            background-color: aqua;
+            border: none;
+            border-radius: 7px;
+            font-size: 20px;
+        }
+
+    .box{
+        width: 300px;
+        height: 450px;
+        border: 1px solid gray; 
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 15px;
+        margin: 5px;
+    }
+
+    #meals-containner{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .box-img{
+        width: 300px;
+        height: 280px;
+        border-radius: 7px;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="search">
+        <input id="search-box" class="search-input" type="text" placeholder="search here...">
+        <button onclick="load_data()" id="search-btn">Search</button>   
+    </div>
+
+    <div id="meals-containner">
+
+    </div>
+
+    <script>
+       const  load_data = () =>{
+
+        const search_text = document.getElementById("search-box").value;
+
+        fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${search_text}`)
+
+        .then(res => res.json())
+        // .then(data => console.log(data.meals))
+        .then(data => displayData(data.meals))
+
+        clearPrevious();
+       }
+
+       function displayData(data){
+            console.log(data)
+
+            const meals_containner = document.getElementById("meals-containner");
+
+            data.forEach(meal => {
+                console.log(meal);
+
+                const card = document.createElement("div");
+
+                card.classList.add("box");
+                
+                meals_containner.appendChild(card);
+
+                card.innerHTML=`<img class="box-img" src="${meal.strMealThumb}" >
+                                <h2>${meal.strMeal}</h2>
+                                 <p>${meal.strInstructions.slice(0,60)}</p>
+                                <button>Details</button>`
+            });
+        }
+
+        function clearPrevious(){
+            const mealsContainer = document.getElementById("meals-containner");
+            mealsContainer.innerHTML = " ";
+        }
+    </script>
+</body>
+</html>
